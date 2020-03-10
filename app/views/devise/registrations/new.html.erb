@@ -1,0 +1,47 @@
+<html style="padding-left: 650px;padding-top: 150px">
+<h1 style="color: #B00100;font-size: 80px">Dribble</h1>
+<h2 style="color: #B00100;padding-left: 10px;font-size: 50px" >Sign up</h2>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<body style="background-color: thistle">
+<p1><%=render 'devise/shared/error_messages' %></p1>
+<style>
+.btn {
+  font-size: 50px;
+
+
+}
+</style>
+
+
+  <div class="form-inputs" style=" padding-right: 200px;width:50px;padding: 5px;font-size: 20px">
+    <%= f.input :email,
+                label:"Email: ",
+                input_html: { autocomplete: "email" }
+                 %>
+    <br>
+    <%= f.input :name,
+                label:"Name:",
+                input_html: { autocomplete: "name" } %>
+    <br>
+    <%= f.input :password,
+                label:"Password:",
+                input_html: { autocomplete: "new-password" } %>
+    <br>
+    <%= f.input :password_confirmation,
+                label: "Confirm Password:",
+                input_html: { autocomplete: "new-password" } %>
+  </div>
+  <br>
+  <br>
+
+  <div class="form-actions" >
+    <%= f.button :submit, "Sign up" %>
+  </div>
+<% end %>
+
+
+<p style="padding-top: 30px"> <%= render "devise/shared/links" %></p>
+
+</body>
+</html>

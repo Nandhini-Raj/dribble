@@ -1,0 +1,14 @@
+<html style="padding-left:650px;padding-top:150px">
+<body style="background-color: thistle">
+<%= simple_form_for @post do |f| %>
+
+  <div class="form-inputs" style=" padding-right: 200px;width:50px;padding: 5px;font-size: 20px;font-size: 20px">
+<%=f.input  :image %><br>
+<%= f.input :title %><br>
+<%= f.input :link %><br>
+<%= f.input :description %><br
+ <%= f.button :submit %>
+  </div>
+<%end %>
+</body>
+</html>

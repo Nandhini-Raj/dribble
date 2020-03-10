@@ -1,0 +1,45 @@
+<body style="background-color: thistle">
+<h1><%= @post.title %></h1>
+<%= image_tag @post.image.url(:medium) %>
+<p style="padding: 10px">
+  <%= @post.get_upvotes.size %> Likes
+  &nbsp;
+  <%= @post.get_downvotes.size %> Dislikes
+  <br>
+
+ <%= link_to "Like", like_post_path(@post), method: :get %>
+  &emsp;
+ <%= link_to "Dislike", dislike_post_path(@post), method: :get %>
+<p class="comment_count" style="padding: 10px">
+  <%= pluralize(@post.comments.count, "Comments") %>
+</p>
+<p style="padding: 10px;color: #B00100"><b><%= @post.user.name %></b></p>
+<p style="padding: 10px"><%= @post.link %></p>
+<p style="padding: 10px"><%= @post.description %> </p>
+
+
+<div id="comment"  style="padding: 10px">
+
+  <p><i>Share Your Thoughts !!!</i> </p>
+  <% @comments.each do |comment| %>
+    <div class="comment">
+
+      <p class="usernamecomments"><i>
+        <%= comment.user.name %> :
+        <%= comment.content %>
+      </i>
+      </p>
+
+
+    </div>
+  <% end %>
+  <p style="padding: 10px"><%= render 'comments/form' %></p>
+</div>
+
+
+<p style="padding: 10px" ><%= link_to "Edit",edit_post_path(@post) %>
+  &emsp;
+<%= link_to "Destroy",post_path(@post) ,method: :delete , data: {confirm: "Are you sure ?  "} %>
+  &emsp;
+<%= link_to "Home !",root_path %></p>
+</body>
