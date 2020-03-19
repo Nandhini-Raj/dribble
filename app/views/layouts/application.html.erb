@@ -16,16 +16,18 @@
   <body>
   <header>
     <div class="wrapper clearfix">
-      <div id="logo">
+      <div id="logo" style="font-size: 60px">
         <%= link_to "Muse", root_path %>
       </div>
       <nav>
         <% if user_signed_in? %>
           <%= link_to current_user.name, edit_user_registration_path %>
           <%= link_to "Add New Inspiration", new_post_path, class: "button" %>
+          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
         <% else %>
           <%= link_to "Sign in", new_user_session_path %>
           <%= link_to "Sign Up", new_user_registration_path, class: "button" %>
+
         <% end %>
       </nav>
     </div>

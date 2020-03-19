@@ -1,10 +1,10 @@
 
-<html style="padding-left: 650px;padding-top: 150px">
-<h1 style="color: #B00100;font-size: 80px">Dribble</h1>
-<h2 style="color: #B00100;padding-left: 10px;font-size: 50px">Log in</h2>
+<html>
+
+<h2 style="color: #B00100;padding-left: 700px;font-size: 50px">Log in</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <body  style="background-color: thistle">
+  <body  >
 
   <style>
     .btn {
@@ -14,7 +14,7 @@
   </style>
 
 
-  <div class="form-inputs" id="body" style=" padding-right: 100px;width:50px;font-size: 20px">
+  <div class="form-inputs" id="body" style=" padding-right: 100px;width:50px;font-size: 20px;padding-left: 700px">
     <%= f.input :email,
                 label: "Email:",
                 required: false,
@@ -32,13 +32,13 @@
     </p>
   </div>
 
-  <div class="form-actions">
+  <div class="form-actions" style="padding-left: 700px">
     <%= f.button :submit, "Log in"  %>
   </div>
 <% end %>
 
 
-<%= render "devise/shared/links" %>
+<p style="padding-top: 30px;padding-left: 700px"> <%= render "devise/shared/links" %></p>
 
 </body>
 </html>

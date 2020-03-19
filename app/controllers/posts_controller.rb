@@ -4,11 +4,12 @@ class PostsController < ApplicationController
   def index
     #align all posts in recently created  to old posts
     @posts = Post.all.order("created_at DESC")
+
   end
 
   def show
     @comments = Comment.where(post_id: @post)
-
+    @random_post = Post.where.not(id: @post).order("rand()").first
 
   end
 

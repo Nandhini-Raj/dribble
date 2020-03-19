@@ -1,45 +1,131 @@
-<body style="background-color: thistle">
-<h1><%= @post.title %></h1>
-<%= image_tag @post.image.url(:medium) %>
-<p style="padding: 10px">
-  <%= @post.get_upvotes.size %> Likes
-  &nbsp;
-  <%= @post.get_downvotes.size %> Dislikes
-  <br>
 
- <%= link_to "Like", like_post_path(@post), method: :get %>
-  &emsp;
- <%= link_to "Dislike", dislike_post_path(@post), method: :get %>
-<p class="comment_count" style="padding: 10px">
-  <%= pluralize(@post.comments.count, "Comments") %>
-</p>
-<p style="padding: 10px;color: #B00100"><b><%= @post.user.name %></b></p>
-<p style="padding: 10px"><%= @post.link %></p>
-<p style="padding: 10px"><%= @post.description %> </p>
+<% if user_signed_in? %>
+ <div id="post_show">
+  <h1 style="color: #B00100;font-size: 50px;padding-left: 20px">
+    <%= @post.title %>
+  </h1>
+   <br>
+  <p class="username" style="padding-left: 30px">
+    <i class="fa fa-user"></i> &ensp;
+    <%= @post.user.name %>
+    about
+    <%= time_ago_in_words(@post.created_at) %>
+  </p>
+  <div class="clearfix">
+    <div class="post_image_description" style="padding-left: 30px" >
+      <%= image_tag @post.image.url(:medium) %>
+      <div class="description" style="padding-left: 20px;font-size: 20px">
+        <%= simple_format(@post.description) %>
+      </div>
+    </div>
+    <div class="post_data" style="padding-left: 100px">
 
-
-<div id="comment"  style="padding: 10px">
-
-  <p><i>Share Your Thoughts !!!</i> </p>
-  <% @comments.each do |comment| %>
-    <div class="comment">
-
-      <p class="usernamecomments"><i>
-        <%= comment.user.name %> :
-        <%= comment.content %>
-      </i>
+      <%= link_to like_post_path(@post), method: :get, class: "data" do %>
+        <i class="fa fa-thumbs-o-up"></i>
+        <%= pluralize(@post.get_upvotes.size, "Like") %>
+      <% end %>
+      <%= link_to dislike_post_path(@post), method: :get, class: "data" do %>
+        <i class="fa fa-thumbs-o-down"></i>
+        <%= pluralize(@post.get_downvotes.size, "Dislike") %>
+      <% end %>
+      <p class="data">
+        <i class="fa fa-comments-o"></i>
+        <%= pluralize(@post.comments.count, "Comment") %>
       </p>
+      <% if @post.user == current_user %>
+        <%= link_to "Edit", edit_post_path(@post), class: "data" %>
+        <%= link_to "Delete", post_path(@post), method: :delete, data: { confirm: "Are you sure?" }, class: "data" %>
+      <% end %>
+    </div>
 
-
+    <div id="random_post" style="padding: 60px;padding-left: 10px">
+      <br>
+      <h3>Random Inspiration</h3>
+      <div class="post">
+        <div class="post_image">
+          <%= link_to (image_tag @random_post.image.url(:medium)), post_path(@random_post) %>
+        </div>
+        <div class="post_content">
+          <div class="title">
+            <h2>
+              <%= link_to @random_post.title, post_path(@random_post) %>
+            </h2>
+          </div>
+          <div class="data clearfix">
+            <p class="username">
+              Shared by
+              <%= @random_post.user.name %>
+            </p>
+            <p class="buttons">
+              <span>
+                <i class="fa fa-comments-o"></i>
+                <%= @random_post.comments.count %>
+              </span>
+              <span>
+                <i class="fa fa-thumbs-o-up"></i>
+                <%= @random_post.get_likes.size %>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+ <div id="comments" style="padding-left: 30px">
+  <h2 class="comment_count" style="color: #B00100">
+    <%= pluralize(@post.comments.count, "Comment") %>
+  </h2>
+  <% @comments.each do |comment| %>
+    <div class="comment"  style="padding-left: 30px">
+      <p class="username" >
+        <%= comment.user.name %>
+      </p>
+      <p class="content">
+        <%= comment.content %>
+      </p>
     </div>
   <% end %>
-  <p style="padding: 10px"><%= render 'comments/form' %></p>
-</div>
 
+  <%= render "comments/form" %>
+ </div>
+<% else %>
+  <div id="post_show">
+    <h1 style="color: #B00100;font-size: 50px;padding-left: 20px">
+      <%= @post.title %>
+    </h1>
+    <p class="username" style="padding-left: 30px">
+      <i class="fa fa-user"></i> &ensp;
+      <%= @post.user.name %>
+      about
+      <%= time_ago_in_words(@post.created_at) %>
+    </p>
+    <div class="clearfix">
+      <div class="post_image_description" style="padding-left: 30px" >
+        <%= image_tag @post.image.url(:medium) %>
+        <div class="description" style="padding-left: 20px;font-size: 20px">
+          <%= simple_format(@post.description) %>
+        </div>
+  </div>
+    </div>
 
-<p style="padding: 10px" ><%= link_to "Edit",edit_post_path(@post) %>
-  &emsp;
-<%= link_to "Destroy",post_path(@post) ,method: :delete , data: {confirm: "Are you sure ?  "} %>
-  &emsp;
-<%= link_to "Home !",root_path %></p>
-</body>
+      <div class="post_data" style="padding-left: 100px">
+
+        <%= link_to like_post_path(@post), method: :get, class: "data" do %>
+          <i class="fa fa-thumbs-o-up"></i>
+          <%= pluralize(@post.get_upvotes.size, "Like") %>
+        <% end %>
+        <%= link_to dislike_post_path(@post), method: :get, class: "data" do %>
+          <i class="fa fa-thumbs-o-down"></i>
+          <%= pluralize(@post.get_downvotes.size, "Dislike") %>
+        <% end %>
+        <p class="data">
+          <i class="fa fa-comments-o"></i>
+          <%= pluralize(@post.comments.count, "Comment") %>
+        </p>
+
+      </div>
+  </div>
+  <p style="padding: 150px ;padding-left: 40px;color: #B00100 ; font-size: 20px"> Sign in or Sign Up to see more ! </p>
+
+<%end %>

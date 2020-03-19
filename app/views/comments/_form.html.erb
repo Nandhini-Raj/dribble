@@ -1,5 +1,8 @@
 <%=simple_form_for([@post,@post.comments.build]) do |f| %>
 
-  <%=f.input :content ,label: "Reply" %><br>
+
+  <%=f.input :content ,label: "Share Your Thoughts : " %>
+</p>
   <%=f.button :submit , class: "button " %>
+
 <%end %>
