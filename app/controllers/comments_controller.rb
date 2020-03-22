@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
   @comment.post_id =@post.id
 
    if @comment.save
+     CommentMailer.new_comment(@comment).deliver!
     redirect_to post_path(@post)
    else
     render 'new'
