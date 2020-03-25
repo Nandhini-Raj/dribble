@@ -6,13 +6,22 @@ class PostsController < ApplicationController
     @posts = Post.all.order("created_at DESC")
 
   end
+  def destroy_all
+
+    GeneratePostJob.perform_now(current_user.id)
+    redirect_to posts_profile_path
+    end
+
+
 
   def show
     @comments = Comment.where(post_id: @post)
-    @random_post = Post.where.not(id: @post).order("rand()").first
+
 
   end
-
+  def profile
+    @post = Post.find_by_title(params[:id])
+  end
   def new
     #current user checks if there is user id in the post inorder to create new post
     @post=current_user.posts.build
@@ -39,9 +48,11 @@ class PostsController < ApplicationController
   end
 
   def edit
+
   end
 
   def update
+
     #autofill the title,description,link and any edit and save can be done
     if @post.update(post_params)
       redirect_to @post
@@ -60,6 +71,8 @@ class PostsController < ApplicationController
   def find
   end
 
+
+
   private
 
   def find_post
@@ -70,5 +83,13 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title,:link,:description,:image)
   end
-  end
+
+
+
+end
+
+
+
+
+
 
